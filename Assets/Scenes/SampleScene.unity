@@ -223,7 +223,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27742728}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 344248dd725b0ba4faace6a29735944c, type: 3}
   m_Name: 
@@ -5468,7 +5468,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652236251412}
-  - component: {fileID: 5866666020403600238}
   - component: {fileID: 5866666020403600239}
   m_Layer: 0
   m_Name: animated_main_character
@@ -7813,28 +7812,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &5866666020403600238
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148513856430}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b850143cabd7bda42ada90e9b3db0558, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5866666020403600239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7842,15 +7819,108 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148513856430}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d90214416fecc374297b0eee8c84c7a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   upperLegL: {fileID: 1459458101035938065}
   upperLegR: {fileID: 211266608557523566}
+  lowerLegL: {fileID: 1089753275356173085}
+  lowerLegR: {fileID: 7931069231142977783}
+  kneeSignL: 1
+  kneeSignR: -1
+  hipSignL: -1
+  hipSignR: 1
   cycleSpeed: 1
-  stepAngle: 30
+  upperLegCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.999994
+      inSlope: -4.001799
+      outSlope: -4.001799
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: -1.0009056
+      inSlope: 0.0000059604645
+      outSlope: 0.0000059604645
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 4.001811
+      outSlope: 4.001811
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  lowerLegCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.52722156
+      outSlope: 0.52722156
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.19977379
+      value: 0.10532504
+      inSlope: 0.61877066
+      outSlope: 0.61877066
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.38080886
+    - serializedVersion: 3
+      time: 0.5
+      value: 1.000258
+      inSlope: 0.00000211045
+      outSlope: 0.00000211045
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.46975124
+      outWeight: 0.34404978
+    - serializedVersion: 3
+      time: 0.79914224
+      value: 0.10057333
+      inSlope: -0.7514881
+      outSlope: -0.7514881
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.52128386
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.5007192
+      outSlope: -0.5007192
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  upperLegAngle: 40
+  lowerLegAngle: 50
+  scrubMode: 0
+  scrubPhase: 0
 --- !u!95 &5866666020487730306
 Animator:
   serializedVersion: 7
