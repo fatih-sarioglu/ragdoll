@@ -192,6 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 27742729}
   - component: {fileID: 27742730}
+  - component: {fileID: 27742731}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -230,6 +231,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatedRoot: {fileID: 3742407836567466585}
   ragdollRoot: {fileID: 3742407836483304885}
+--- !u!114 &27742731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27742728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b69ba736b0eb2e5419a43985e268cb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &42805613
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,7 +757,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
@@ -7832,93 +7845,10 @@ MonoBehaviour:
   kneeSignR: -1
   hipSignL: -1
   hipSignR: 1
-  cycleSpeed: 1
-  upperLegCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.999994
-      inSlope: -4.001799
-      outSlope: -4.001799
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5
-      value: -1.0009056
-      inSlope: 0.0000059604645
-      outSlope: 0.0000059604645
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 4.001811
-      outSlope: 4.001811
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  lowerLegCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0.52722156
-      outSlope: 0.52722156
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.19977379
-      value: 0.10532504
-      inSlope: 0.61877066
-      outSlope: 0.61877066
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.38080886
-    - serializedVersion: 3
-      time: 0.5
-      value: 1.000258
-      inSlope: 0.00000211045
-      outSlope: 0.00000211045
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.46975124
-      outWeight: 0.34404978
-    - serializedVersion: 3
-      time: 0.79914224
-      value: 0.10057333
-      inSlope: -0.7514881
-      outSlope: -0.7514881
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.52128386
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -0.5007192
-      outSlope: -0.5007192
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  upperLegAngle: 40
-  lowerLegAngle: 50
+  stepData: {fileID: 11400000, guid: ef9f46fbe0849964b82c207e7f813721, type: 2}
+  input: {fileID: 27742731}
+  walkBackwards: 0
+  restBlendSpeed: 8
   scrubMode: 0
   scrubPhase: 0
 --- !u!95 &5866666020487730306
