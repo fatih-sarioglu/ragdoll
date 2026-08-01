@@ -5,9 +5,13 @@ public class RagdollLocomotion : MonoBehaviour
     [Header("Modules")]
     [SerializeField] ProceduralWalk walk;
     [SerializeField] ProceduralJump jump;
+    [SerializeField] ProceduralTurn turn;
 
     [Header("Input")]
     [SerializeField] PlayerInputReader input;
+
+    [Header("Camera")]
+    [SerializeField] Transform cameraTransform;
 
     enum LocoState { Idle, Walking, Airborne }
     LocoState _state = LocoState.Idle;
@@ -21,7 +25,9 @@ public class RagdollLocomotion : MonoBehaviour
     [Header("Jump")]
     [SerializeField] Rigidbody hipsRb;
 
-    [SerializeField] float minAirTime;
+    [SerializeField] float coyoteTime;
+    private float _ungroundedTime = 0.15f;
+    [SerializeField] float minAirTime = 0.25f;
     private float _airTime;
 
     [SerializeField] float tuckHip, tuckKnee;
@@ -31,16 +37,34 @@ public class RagdollLocomotion : MonoBehaviour
 
     void FixedUpdate()
     {
-        jump.Tick();
+        // walk/turn
+        Vector3 camF = cameraTransform.forward;
+        camF.y = 0f;
+        camF.Normalize();
+        
+        Vector3 camR = cameraTransform.right;
+        camR.y = 0f;
+        camR.Normalize();
 
-        float moveY = input.Move.y;
+        Vector3 moveDir = camF * input.Move.y + camR * input.Move.x;
+
         const float deadzone = 0.1f;
-        if (Mathf.Abs(moveY) < deadzone)
-            _pending = null;                          // null = idle
+        bool wantsMove = moveDir.sqrMagnitude > deadzone * deadzone;
+
+        if (wantsMove)
+        {
+            float targetYaw = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
+            turn.SetTargetYaw(targetYaw);
+            _pending = stepData.forwards;
+        }
         else
-            _pending = moveY > 0 ? stepData.forwards : stepData.backwards;
+        {
+            _pending = null;
+        }
+        turn.Tick(Time.fixedDeltaTime);
 
-
+        // jump/airborne
+        jump.Tick();
         bool jumpPressed = input.JumpBuffered;
         input.ConsumeJump();
 
@@ -50,9 +74,14 @@ public class RagdollLocomotion : MonoBehaviour
             _state = LocoState.Airborne;
             _airTime = 0f;
         }
-        else if (!jump.IsGrounded)
-        {
+
+
+        if (jump.IsGrounded) _ungroundedTime = 0f;
+        else _ungroundedTime += Time.fixedDeltaTime;
+        if (_state != LocoState.Airborne && _ungroundedTime > coyoteTime)
+        { 
             _state = LocoState.Airborne;
+            _airTime = 0f;
         }
 
 
