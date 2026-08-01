@@ -5380,7 +5380,7 @@ GameObject:
   - component: {fileID: 715823320}
   - component: {fileID: 715823319}
   - component: {fileID: 715823321}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LowerArm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5416,7 +5416,7 @@ GameObject:
   - component: {fileID: 332347134}
   - component: {fileID: 332347137}
   - component: {fileID: 3742407836483304886}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5483,6 +5483,8 @@ GameObject:
   - component: {fileID: 543450652236251412}
   - component: {fileID: 5866666020403600239}
   - component: {fileID: 5866666020403600240}
+  - component: {fileID: 5866666020403600241}
+  - component: {fileID: 5866666020403600242}
   m_Layer: 0
   m_Name: animated_main_character
   m_TagString: Untagged
@@ -5733,7 +5735,7 @@ GameObject:
   - component: {fileID: 1587285427}
   - component: {fileID: 1587285426}
   - component: {fileID: 1587285428}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: UpperLeg.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6382,7 +6384,7 @@ GameObject:
   - component: {fileID: 1695560715}
   - component: {fileID: 1695560714}
   - component: {fileID: 1695560716}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LowerLeg.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6700,7 +6702,7 @@ GameObject:
   - component: {fileID: 656904906}
   - component: {fileID: 656904905}
   - component: {fileID: 656904907}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LowerLeg.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7373,7 +7375,7 @@ GameObject:
   - component: {fileID: 1397063193}
   - component: {fileID: 1397063192}
   - component: {fileID: 1397063194}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: UpperLeg.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7392,7 +7394,7 @@ GameObject:
   - component: {fileID: 350613952}
   - component: {fileID: 350613951}
   - component: {fileID: 350613953}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: UpperArm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7595,7 +7597,7 @@ GameObject:
   - component: {fileID: 1255906212}
   - component: {fileID: 1255906211}
   - component: {fileID: 1255906213}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LowerArm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7846,9 +7848,6 @@ MonoBehaviour:
   kneeSignR: -1
   hipSignL: -1
   hipSignR: 1
-  stepData: {fileID: 11400000, guid: ef9f46fbe0849964b82c207e7f813721, type: 2}
-  input: {fileID: 27742731}
-  walkBackwards: 0
   restBlendSpeed: 8
   scrubMode: 0
   scrubPhase: 0
@@ -7867,6 +7866,48 @@ MonoBehaviour:
   hipsAnimated: {fileID: 3742407836567466585}
   input: {fileID: 27742731}
   turnSpeed: 120
+--- !u!114 &5866666020403600241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148513856430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1ccfb0b33d20743a027c5524567b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footL: {fileID: 8189947161924193631}
+  footR: {fileID: 9189705698915102245}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 55
+  ragdollRoot: {fileID: 8879528568004058726}
+  jumpVelocity: 3
+  rayOffset: 0.1
+  rayLength: 0.25
+--- !u!114 &5866666020403600242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148513856430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f620d441780c65a4fa75acaa2d1b4d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walk: {fileID: 5866666020403600239}
+  jump: {fileID: 5866666020403600241}
+  input: {fileID: 27742731}
+  stepData: {fileID: 11400000, guid: ef9f46fbe0849964b82c207e7f813721, type: 2}
+  hipsRb: {fileID: 332347135}
+  minAirTime: 0.25
+  tuckHip: 50
+  tuckKnee: 45
+  tuckBlendSpeed: 5
 --- !u!95 &5866666020487730306
 Animator:
   serializedVersion: 7
@@ -8336,7 +8377,7 @@ GameObject:
   - component: {fileID: 1436821070}
   - component: {fileID: 1436821069}
   - component: {fileID: 1436821071}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8682,7 +8723,7 @@ GameObject:
   - component: {fileID: 77335096}
   - component: {fileID: 77335095}
   - component: {fileID: 77335097}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8735,7 +8776,7 @@ GameObject:
   - component: {fileID: 1904800609}
   - component: {fileID: 1904800608}
   - component: {fileID: 1904800610}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: UpperArm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}

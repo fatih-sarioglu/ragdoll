@@ -81,17 +81,17 @@ public class RagdollTester : MonoBehaviour
         //     activeRagdoll.SetLimp(_limp);
         // }
 
-        // --- Slow motion ---
-        if (kb.spaceKey.wasPressedThisFrame)
-        {
-            Time.timeScale = 0.2f;
-            Time.fixedDeltaTime = 0.02f * Time.timeScale; // keep physics steps proportional
-        }
-        if (kb.spaceKey.wasReleasedThisFrame)
-        {
-            Time.timeScale = 1f;
-            Time.fixedDeltaTime = 0.02f;
-        }
+        //// --- Slow motion ---
+        //if (kb.spaceKey.wasPressedThisFrame)
+        //{
+        //    Time.timeScale = 0.2f;
+        //    Time.fixedDeltaTime = 0.02f * Time.timeScale; // keep physics steps proportional
+        //}
+        //if (kb.spaceKey.wasReleasedThisFrame)
+        //{
+        //    Time.timeScale = 1f;
+        //    Time.fixedDeltaTime = 0.02f;
+        //}
     }
 
     void Fire(Vector2 screenPos)
