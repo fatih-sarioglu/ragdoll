@@ -565,7 +565,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
@@ -655,14 +655,14 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 15
+    limit: 45
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 10
+    limit: 65
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -45940,7 +45940,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691671413}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a076c17fe76165e4f8ed21498b877bf9, type: 3}
   m_Name: 
@@ -48720,14 +48720,14 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 15
+    limit: 45
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 10
+    limit: 65
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -49659,6 +49659,7 @@ GameObject:
   - component: {fileID: 5866666020403600240}
   - component: {fileID: 5866666020403600241}
   - component: {fileID: 5866666020403600242}
+  - component: {fileID: 5866666020403600243}
   m_Layer: 0
   m_Name: animated_main_character
   m_TagString: Untagged
@@ -50273,7 +50274,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837774606203320222}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -50710,7 +50711,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   ragdollRoot: {fileID: 8879528568004058726}
-  jumpVelocity: 3
+  jumpVelocity: 4
   rayOffset: 0.1
   rayLength: 0.25
 --- !u!114 &5866666020403600242
@@ -50728,6 +50729,7 @@ MonoBehaviour:
   walk: {fileID: 5866666020403600239}
   jump: {fileID: 5866666020403600241}
   turn: {fileID: 5866666020403600240}
+  arms: {fileID: 5866666020403600243}
   input: {fileID: 27742731}
   cameraTransform: {fileID: 330585546}
   stepData: {fileID: 11400000, guid: ef9f46fbe0849964b82c207e7f813721, type: 2}
@@ -50737,6 +50739,41 @@ MonoBehaviour:
   tuckHip: 50
   tuckKnee: 45
   tuckBlendSpeed: 5
+--- !u!114 &5866666020403600243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148513856430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cf4c89d5e746b4e88da4cc4effd8bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upperArmL: {fileID: 37300794189293787}
+  upperArmR: {fileID: 621354696438208111}
+  lowerArmL: {fileID: 6350758999643290825}
+  lowerArmR: {fileID: 1874028514458891707}
+  upperArmJointL: {fileID: 1904800610}
+  upperArmJointR: {fileID: 350613953}
+  lowerArmJointL: {fileID: 1255906213}
+  lowerArmJointR: {fileID: 715823321}
+  elbowSignL: 1
+  elbowSignR: 1
+  shoulderSignL: 1
+  shoulderSignR: 1
+  shoulderAngle: 80
+  elbowAngle: 15
+  blendSpeed: 6
+  limpSpringUpper: 10
+  limpDamperUpper: 2
+  limpSpringLower: 10
+  limpDamperLower: 2
+  reachSpringUpper: 350
+  reachDamperUpper: 50
+  reachSpringLower: 350
+  reachDamperLower: 50
 --- !u!95 &5866666020487730306
 Animator:
   serializedVersion: 7
@@ -51309,8 +51346,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 330585546}
+  - {fileID: 691671419}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1370263376}
   - {fileID: 27742729}
-  - {fileID: 691671419}

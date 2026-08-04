@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class RagdollLocomotion : MonoBehaviour
+public class RagdollController : MonoBehaviour
 {
     [Header("Modules")]
     [SerializeField] ProceduralWalk walk;
     [SerializeField] ProceduralJump jump;
     [SerializeField] ProceduralTurn turn;
+    [SerializeField] ProceduralArms arms;
 
     [Header("Input")]
     [SerializeField] PlayerInputReader input;
@@ -83,6 +84,10 @@ public class RagdollLocomotion : MonoBehaviour
             _state = LocoState.Airborne;
             _airTime = 0f;
         }
+
+        // arms
+        arms.TickArm(true, input.GrabL ? 1f : 0f, Time.fixedDeltaTime);
+        arms.TickArm(false, input.GrabR ? 1f : 0f, Time.fixedDeltaTime);
 
 
         switch (_state)
