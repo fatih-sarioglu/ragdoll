@@ -7,6 +7,7 @@ public class RagdollController : MonoBehaviour
     [SerializeField] ProceduralJump jump;
     [SerializeField] ProceduralTurn turn;
     [SerializeField] ProceduralArms arms;
+    [SerializeField] GrabSystem grab;
 
     [Header("Input")]
     [SerializeField] PlayerInputReader input;
@@ -34,7 +35,7 @@ public class RagdollController : MonoBehaviour
     [SerializeField] float tuckHip, tuckKnee;
     [SerializeField] float tuckBlendSpeed;
 
-
+    private bool _wasGrabbingL, _wasGrabbingR;
 
     void FixedUpdate()
     {
@@ -88,6 +89,18 @@ public class RagdollController : MonoBehaviour
         // arms
         arms.TickArm(true, input.GrabL ? 1f : 0f, Time.fixedDeltaTime);
         arms.TickArm(false, input.GrabR ? 1f : 0f, Time.fixedDeltaTime);
+
+
+        // grabbing
+        bool wantsGrabL = input.GrabL;
+        if (wantsGrabL && !_wasGrabbingL) grab.TryGrab(true);
+        else if (!wantsGrabL && _wasGrabbingL) grab.Release(true);
+        _wasGrabbingL = wantsGrabL;
+
+        bool wantsGrabR = input.GrabR;
+        if (wantsGrabR && !_wasGrabbingR) grab.TryGrab(false);
+        else if (!wantsGrabR && _wasGrabbingR) grab.Release(false);
+        _wasGrabbingR = wantsGrabR;
 
 
         switch (_state)
