@@ -35,7 +35,7 @@ public class RagdollController : MonoBehaviour
     [SerializeField] float tuckHip, tuckKnee;
     [SerializeField] float tuckBlendSpeed;
 
-    private bool _wasGrabbingL, _wasGrabbingR;
+    private bool _heldL, _heldR, _grabModeL, _grabModeR;
 
     void FixedUpdate()
     {
@@ -86,19 +86,50 @@ public class RagdollController : MonoBehaviour
             _airTime = 0f;
         }
 
-        // arms
-        arms.TickArm(true, input.GrabL ? 1f : 0f, Time.fixedDeltaTime);
-        arms.TickArm(false, input.GrabR ? 1f : 0f, Time.fixedDeltaTime);
+
+        // arms, grabbing & punching
+        // left
+        bool pressedL = input.GrabL;
+        bool grabMode = input.Modifier;
 
 
-        // grabbing
-        bool wantsGrabL = input.GrabL;
-        if (wantsGrabL && arms.Reach(true) > 0.6f) grab.TryGrab(true);
-        else if (!wantsGrabL) grab.Release(true);
+        if (pressedL && !_heldL)            // press edge
+        {
+            _heldL = true;
+            _grabModeL = grabMode;         // latch the mode at press time
+            if (!_grabModeL) arms.Punch(true);
+        }
+        else if (!pressedL && _heldL)       // release edge
+        {
+            _heldL = false;
+            if (!_grabModeL) arms.ReleasePunch(true);
+            else grab.Release(true);
+        }
 
-        bool wantsGrabR = input.GrabR;
-        if (wantsGrabR && arms.Reach(false) > 0.6f) grab.TryGrab(false);
-        else if (!wantsGrabR) grab.Release(false);
+        float targetL = (_heldL && _grabModeL) ? 1f : 0f;
+        arms.TickArm(true, targetL, Time.fixedDeltaTime);
+        if (_heldL && _grabModeL && arms.Reach(true) > 0.6f) grab.TryGrab(true);
+
+        // right
+        bool pressedR = input.GrabR;
+        if (pressedR && !_heldR)            // press edge
+        {
+            _heldR = true;
+            _grabModeR = grabMode;         // latch the mode at press time
+            if (!_grabModeR) arms.Punch(false);
+        }
+        else if (!pressedR && _heldR)       // release edge
+        {
+            _heldR = false;
+            if (!_grabModeR) arms.ReleasePunch(false);
+            else grab.Release(false);
+        }
+
+        float targetR = (_heldR && _grabModeR) ? 1f : 0f;
+        arms.TickArm(false, targetR, Time.fixedDeltaTime);
+        if (_heldR && _grabModeR && arms.Reach(false) > 0.6f) grab.TryGrab(false);
+
+
 
 
         switch (_state)

@@ -136,6 +136,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Modifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""4ad765b3-9420-4770-9e6b-9b07e8284580"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -292,6 +301,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""685d3c83-bb27-4e8e-91e9-e3f0078b7b6c"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6979202-14b7-465c-8d0f-0095bc85663d"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Modifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -305,6 +336,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_GrabL = m_Gameplay.FindAction("GrabL", throwIfNotFound: true);
         m_Gameplay_GrabR = m_Gameplay.FindAction("GrabR", throwIfNotFound: true);
+        m_Gameplay_Modifier = m_Gameplay.FindAction("Modifier", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -390,6 +422,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_GrabL;
     private readonly InputAction m_Gameplay_GrabR;
+    private readonly InputAction m_Gameplay_Modifier;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -421,6 +454,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/GrabR".
         /// </summary>
         public InputAction @GrabR => m_Wrapper.m_Gameplay_GrabR;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Modifier".
+        /// </summary>
+        public InputAction @Modifier => m_Wrapper.m_Gameplay_Modifier;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -462,6 +499,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @GrabR.started += instance.OnGrabR;
             @GrabR.performed += instance.OnGrabR;
             @GrabR.canceled += instance.OnGrabR;
+            @Modifier.started += instance.OnModifier;
+            @Modifier.performed += instance.OnModifier;
+            @Modifier.canceled += instance.OnModifier;
         }
 
         /// <summary>
@@ -488,6 +528,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @GrabR.started -= instance.OnGrabR;
             @GrabR.performed -= instance.OnGrabR;
             @GrabR.canceled -= instance.OnGrabR;
+            @Modifier.started -= instance.OnModifier;
+            @Modifier.performed -= instance.OnModifier;
+            @Modifier.canceled -= instance.OnModifier;
         }
 
         /// <summary>
@@ -563,5 +606,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnGrabR(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Modifier" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnModifier(InputAction.CallbackContext context);
     }
 }

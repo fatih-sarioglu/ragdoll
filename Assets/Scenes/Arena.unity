@@ -2117,7 +2117,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795639305517520475}
   serializedVersion: 4
-  m_Mass: 1.5
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -3174,7 +3174,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5444191499386602391}
   serializedVersion: 4
-  m_Mass: 1.5
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -8583,7 +8583,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837774606203320222}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9061,18 +9061,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cf4c89d5e746b4e88da4cc4effd8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upperArmL: {fileID: 37300794189293787}
-  upperArmR: {fileID: 621354696438208111}
-  lowerArmL: {fileID: 6350758999643290825}
-  lowerArmR: {fileID: 1874028514458891707}
-  upperArmJointL: {fileID: 1904800610}
-  upperArmJointR: {fileID: 350613953}
-  lowerArmJointL: {fileID: 1255906213}
-  lowerArmJointR: {fileID: 715823321}
-  elbowSignL: 1
-  elbowSignR: 1
-  shoulderSignL: 1
-  shoulderSignR: 1
+  armL:
+    upper: {fileID: 37300794189293787}
+    lower: {fileID: 6350758999643290825}
+    upperJoint: {fileID: 1904800610}
+    lowerJoint: {fileID: 1255906213}
+    shoulderSign: 1
+    elbowSign: 1
+    windupShoulderEuler: {x: -60, y: 0, z: 0}
+    windupElbowAngle: 135
+  armR:
+    upper: {fileID: 621354696438208111}
+    lower: {fileID: 1874028514458891707}
+    upperJoint: {fileID: 350613953}
+    lowerJoint: {fileID: 715823321}
+    shoulderSign: 1
+    elbowSign: 1
+    windupShoulderEuler: {x: 60, y: 0, z: 0}
+    windupElbowAngle: 135
   shoulderAngle: 80
   elbowAngle: 15
   blendSpeed: 6
@@ -9084,6 +9090,15 @@ MonoBehaviour:
   reachDamperUpper: 50
   reachSpringLower: 350
   reachDamperLower: 50
+  punchOutSpeed: 10
+  punchBackSpeed: 3
+  punchSpringUpper: 1000
+  punchSpringLower: 1000
+  punchElbowAngle: 0
+  windupSpringUpper: 150
+  windupSpringLower: 150
+  windupAmount: 0.4
+  windupSpeed: 6
 --- !u!114 &5866666020403600244
 MonoBehaviour:
   m_ObjectHideFlags: 0
