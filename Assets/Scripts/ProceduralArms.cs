@@ -38,6 +38,8 @@ public class ProceduralArms : MonoBehaviour
     Quaternion _initUpperL, _initUpperR, _initLowerL, _initLowerR;
     float _reachL, _reachR;
 
+    public float Reach(bool left) => left ? _reachL : _reachR;
+
     void Awake()
     {
         _initUpperL = upperArmL.localRotation;

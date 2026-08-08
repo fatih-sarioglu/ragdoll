@@ -93,14 +93,12 @@ public class RagdollController : MonoBehaviour
 
         // grabbing
         bool wantsGrabL = input.GrabL;
-        if (wantsGrabL && !_wasGrabbingL) grab.TryGrab(true);
-        else if (!wantsGrabL && _wasGrabbingL) grab.Release(true);
-        _wasGrabbingL = wantsGrabL;
+        if (wantsGrabL && arms.Reach(true) > 0.6f) grab.TryGrab(true);
+        else if (!wantsGrabL) grab.Release(true);
 
         bool wantsGrabR = input.GrabR;
-        if (wantsGrabR && !_wasGrabbingR) grab.TryGrab(false);
-        else if (!wantsGrabR && _wasGrabbingR) grab.Release(false);
-        _wasGrabbingR = wantsGrabR;
+        if (wantsGrabR && arms.Reach(false) > 0.6f) grab.TryGrab(false);
+        else if (!wantsGrabR) grab.Release(false);
 
 
         switch (_state)
