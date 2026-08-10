@@ -10,8 +10,6 @@ public class PlayerInputReader : MonoBehaviour
     public bool GrabL { get; private set; }
     public bool GrabR { get; private set; }
 
-    public bool Modifier { get; private set; }
-
 
     void Awake() => _playerControls = new PlayerControls();
     void OnEnable() => _playerControls.Gameplay.Enable();
@@ -24,8 +22,6 @@ public class PlayerInputReader : MonoBehaviour
 
         GrabL = _playerControls.Gameplay.GrabL.IsPressed();
         GrabR = _playerControls.Gameplay.GrabR.IsPressed();
-
-        Modifier = _playerControls.Gameplay.Modifier.IsPressed();
     }
 
     public void ConsumeJump() => JumpBuffered = false;
