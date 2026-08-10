@@ -106,7 +106,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    stepDuration: 0.5
+    stepDuration: 0.4
     upperLegMultiplier: 90
     lowerLegMultiplier: 50
   backwards:

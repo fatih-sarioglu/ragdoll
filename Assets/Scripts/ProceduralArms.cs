@@ -9,12 +9,12 @@ public class ArmSide
     public Transform upper, lower;
     public ConfigurableJoint upperJoint, lowerJoint;
     public float shoulderSign = 1f, elbowSign = 1f;
-    public Vector3 windupShoulderEuler;
-    public float windupElbowAngle;
 
     [System.NonSerialized] public Quaternion initUpper, initLower;
     [System.NonSerialized] public float reach;
     [System.NonSerialized] public ArmState state;
+    [System.NonSerialized] public bool isLeft;
+    [System.NonSerialized] public float windupStartReach;
 }
 
 public class ProceduralArms : MonoBehaviour
@@ -49,19 +49,26 @@ public class ProceduralArms : MonoBehaviour
     [SerializeField] float windupAmount = 0.4f;
     [SerializeField] float windupSpeed = 6f;
 
+    [Header("Windup pose (mirrored automatically per side)")]
+    [SerializeField] float windupPullbackAngle = 60f;
+    [SerializeField] float windupSideAngle = 35f;
+    [SerializeField] float windupElbowBend = 135f;
+    [SerializeField] float windupTwist = 0f;
+
     ArmSide Side(bool left) => left ? armL : armR;
 
     void Awake()
     {
-        InitSide(armL);
-        InitSide(armR);
+        InitSide(armL, true);
+        InitSide(armR, false);
     }
 
-    void InitSide(ArmSide s)
+    void InitSide(ArmSide s, bool left)
     {
         s.initUpper = s.upper.localRotation;
         s.initLower = s.lower.localRotation;
         s.state = ArmState.Free;
+        s.isLeft = left;
     }
 
     public float Reach(bool left) => Side(left).reach;
@@ -110,7 +117,7 @@ public class ProceduralArms : MonoBehaviour
 
             SetArmSpring(s.upperJoint, windupSpringUpper, windupSpringUpper * 0.08f);
             SetArmSpring(s.lowerJoint, windupSpringLower, windupSpringLower * 0.08f);
-            ApplyWindupPose(s, Mathf.Abs(s.reach) / windupAmount);
+            ApplyWindupPose(s, Mathf.InverseLerp(s.windupStartReach, -windupAmount, s.reach));
             return;
         }
         else if (s.state == ArmState.PunchHold)
@@ -127,6 +134,10 @@ public class ProceduralArms : MonoBehaviour
 
             SetArmSpring(s.upperJoint, punchSpringUpper, punchSpringUpper * 0.08f);
             SetArmSpring(s.lowerJoint, punchSpringLower, punchSpringLower * 0.08f);
+
+            // Blend straight from the cocked pose to the extended pose. Going
+            // through ApplyArm here would retrace the idle pose at reach 0.
+            ApplyPunchPose(s, Mathf.InverseLerp(-windupAmount, 1f, s.reach));
         }
         else
         {
@@ -134,22 +145,23 @@ public class ProceduralArms : MonoBehaviour
             if (s.reach <= 0.01f) s.state = ArmState.Free;
 
             ApplyArmSprings(s, s.reach);
+            ApplyArm(s, punchElbowAngle);
         }
-
-        ApplyArm(s, punchElbowAngle);
     }
 
     public void Punch(bool left)
     {
         ArmSide s = Side(left);
         if (s.state != ArmState.Free) return;
+        s.windupStartReach = s.reach;
         s.state = ArmState.PunchWindup;
     }
 
     public void ReleasePunch(bool left)
     {
         ArmSide s = Side(left);
-        if (s.state == ArmState.PunchHold) s.state = ArmState.PunchOut;
+        if (s.state == ArmState.PunchHold || s.state == ArmState.PunchWindup)
+            s.state = ArmState.PunchOut;
     }
 
     public void CancelPunch(bool left)
@@ -159,12 +171,46 @@ public class ProceduralArms : MonoBehaviour
             s.state = ArmState.Free;
     }
 
+    // The cocked pose: upper arm swung back and out, elbow bent.
+    // Stacked eulers are avoided for the shoulder because composing pullback and
+    // side rotations that way adds a parasitic roll around the bone axis, which
+    // visibly twists the whole forearm once the elbow is bent. Instead the euler
+    // only picks the *direction* the bone should point, and FromToRotation
+    // produces the minimal (twist-free) swing toward it. windupTwist then rolls
+    // the arm deliberately to aim the elbow fold.
+    void WindupTargets(ArmSide s, out Quaternion upperTarget, out Quaternion lowerTarget)
+    {
+        // Local +X swings the arm forward on both sides (same convention as the
+        // reach pose), so pullback is -X. The lateral swing is mirrored between
+        // sides: -Z is outward for the left arm, +Z for the right.
+        float sideSign = s.isLeft ? -1f : 1f;
+        Vector3 dir = Quaternion.Euler(
+            -windupPullbackAngle * s.shoulderSign,
+            0f,
+            windupSideAngle * sideSign) * Vector3.up;
+
+        Quaternion swing = Quaternion.FromToRotation(Vector3.up, dir);
+        Quaternion roll = Quaternion.AngleAxis(windupTwist * sideSign, Vector3.up);
+
+        upperTarget = s.initUpper * swing * roll;
+        lowerTarget = s.initLower * Quaternion.Euler(windupElbowBend * s.elbowSign, 0f, 0f);
+    }
+
     void ApplyWindupPose(ArmSide s, float t)
     {
-        Quaternion shoulderTarget = s.initUpper * Quaternion.Euler(s.windupShoulderEuler);
-        Quaternion elbowTarget = s.initLower * Quaternion.Euler(s.windupElbowAngle, 0f, 0f);
+        WindupTargets(s, out Quaternion upperTarget, out Quaternion lowerTarget);
+        s.upper.localRotation = Quaternion.Slerp(s.initUpper, upperTarget, t);
+        s.lower.localRotation = Quaternion.Slerp(s.initLower, lowerTarget, t);
+    }
 
-        s.upper.localRotation = Quaternion.Slerp(s.initUpper, shoulderTarget, t);
-        s.lower.localRotation = Quaternion.Slerp(s.initLower, elbowTarget, t);
+    // Punch trajectory: cocked pose -> fully extended reach pose, directly.
+    void ApplyPunchPose(ArmSide s, float t)
+    {
+        WindupTargets(s, out Quaternion windupUpper, out Quaternion windupLower);
+        Quaternion punchUpper = s.initUpper * Quaternion.Euler(shoulderAngle * s.shoulderSign, 0f, 0f);
+        Quaternion punchLower = s.initLower * Quaternion.Euler(punchElbowAngle * s.elbowSign, 0f, 0f);
+
+        s.upper.localRotation = Quaternion.Slerp(windupUpper, punchUpper, t);
+        s.lower.localRotation = Quaternion.Slerp(windupLower, punchLower, t);
     }
 }
