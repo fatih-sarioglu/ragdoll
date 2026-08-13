@@ -80,8 +80,4 @@ public class PoseDriver : MonoBehaviour
             pair.joint.SetTargetRotationLocal(pair.animatedBone.localRotation, pair.startLocalRotation);
         }
     }
-
-    void Update()
-    {
-    }
 }
