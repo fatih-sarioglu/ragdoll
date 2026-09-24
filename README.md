@@ -4,6 +4,10 @@ A physics-based **active ragdoll** game made with Unity. It started out as a rag
 
 More than anything, this was a learning project about active ragdolls: exhausting, fun, and full of lessons. Also, a friendly warning, **this is not a great pick for a beginner project** :)
 
+You can watch the demo here:
+
+https://github.com/user-attachments/assets/d1dc915d-b6f3-4ccd-8413-fa45ba1474bb
+
 ## What's in it
 
 - **Active ragdoll character** driven by `ConfigurableJoint`s, the character stays upright and moves through physics forces, not animations.
